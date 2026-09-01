@@ -1,4 +1,4 @@
-const CACHE = "dailyTask-v20";
+const CACHE = "dailyTask-v21";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (e) => {
