@@ -150,7 +150,7 @@
   .cal-cell .ct.overdue{background:#fecaca;color:#991b1b;font-weight:600;}
   .cal-cell .ct:not(.done):not(.overdue){background:#dbeafe;color:#1e40af;}
   /* 重要(high)：文字红色 + 加粗 */
-  .cal-cell .ct.imp,.cal-cell .ct.imp .ct-t{color:#f87171;font-weight:800;}
+  .cal-cell .ct.imp,.cal-cell .ct.imp .ct-t{color:#b91c1c;font-weight:800;}
   /* 稍后(low)：颜色变浅（更浅一档，与底色匹配，不改背景） */
   .cal-cell .ct.done.low{color:#15803d;}
   .cal-cell .ct.overdue.low{color:#b91c1c;}
@@ -5348,7 +5348,7 @@ loadSyncCfg();
   }
 })();
 if("serviceWorker" in navigator){
-  const SW_VER="20"; // 与 sw.js 中 CACHE 版本保持一致；每次更新需同步递增
+  const SW_VER="21"; // 与 sw.js 中 CACHE 版本保持一致；每次更新需同步递增
   let _swRefreshing=false;
   window.addEventListener("load",()=>{
     navigator.serviceWorker.register("./sw.js?_="+SW_VER).then(reg=>{
