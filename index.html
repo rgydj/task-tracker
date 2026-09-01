@@ -149,11 +149,8 @@
   .cal-cell .ct.done{background:#bbf7d0;color:#166534;}
   .cal-cell .ct.overdue{background:#fecaca;color:#991b1b;font-weight:600;}
   .cal-cell .ct:not(.done):not(.overdue){background:#dbeafe;color:#1e40af;}
-  /* 重要(high)：加粗 + 颜色加深（更深一档，与底色匹配） */
-  .cal-cell .ct.done.imp{color:#14532d;}
-  .cal-cell .ct.overdue.imp{color:#7f1d1d;}
-  .cal-cell .ct:not(.done):not(.overdue).imp{color:#1e3a8a;}
-  .cal-cell .ct.imp,.cal-cell .ct.imp .ct-t{font-weight:800;}
+  /* 重要(high)：文字红色 + 加粗 */
+  .cal-cell .ct.imp,.cal-cell .ct.imp .ct-t{color:#dc2626;font-weight:800;}
   /* 稍后(low)：颜色变浅（更浅一档，与底色匹配，不改背景） */
   .cal-cell .ct.done.low{color:#15803d;}
   .cal-cell .ct.overdue.low{color:#b91c1c;}
@@ -4703,6 +4700,7 @@ document.addEventListener("click",e=>{
     case "copyConfirm":{const td=document.getElementById("copyDate").value;const n=copyTaskTo(id,td);document.getElementById("copyModal").classList.add("hidden");refreshCurrent();if(dayPanelDate)openDay(dayPanelDate);toast(n>0?("已复制 "+n+" 项到 "+td):"复制失败（日期无效）");break;}
     case "copyCancel":document.getElementById("copyModal").classList.add("hidden");break;
     case "unlock":tryUnlock(document.getElementById("lockInput").value||"");break;
+    case "resetPw":if(confirm("将清除访问口令保护并直接进入应用，确定？")){clearPwHash();sessionPw=null;try{sessionStorage.removeItem("tt_unlocked");}catch(e){}document.getElementById("lockModal").classList.add("hidden");toast("已清除口令保护");startApp();}break;
     case "closeQr":document.getElementById("qrModal").classList.add("hidden");break;
     case "closeQrGen":document.getElementById("qrGenModal").classList.add("hidden");break;
     case "genQr":{
@@ -5273,6 +5271,7 @@ function showLock(){
     '<input type="password" id="lockInput" class="lock-input" placeholder="访问口令" autocomplete="off">'+
     '<div class="lock-err" id="lockErr"></div>'+
     '<button class="btn primary" data-action="unlock">解锁</button>'+
+    '<button class="btn ghost" data-action="resetPw" style="margin-top:10px">忘记口令？清除保护并进入</button>'+
     '<div class="tip" style="text-align:center">口令由本机持有者设置；扫码获取口令后可在此输入。</div>'+
   '</div>';
   m.classList.remove("hidden");
@@ -5349,7 +5348,7 @@ loadSyncCfg();
   }
 })();
 if("serviceWorker" in navigator){
-  const SW_VER="17"; // 与 sw.js 中 CACHE 版本保持一致；每次更新需同步递增
+  const SW_VER="19"; // 与 sw.js 中 CACHE 版本保持一致；每次更新需同步递增
   let _swRefreshing=false;
   window.addEventListener("load",()=>{
     navigator.serviceWorker.register("./sw.js?_="+SW_VER).then(reg=>{
